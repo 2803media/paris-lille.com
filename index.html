@@ -15,6 +15,8 @@
       @theme {
         --color-theme-dark: #242629;
         --animate-heartbeat: heartbeat 2s ease-in-out infinite;
+        /* Animation de l'indicateur de swipe */
+        --animate-swipe-hint: swipe-hint 2.5s ease-in-out forwards;
 
         @keyframes heartbeat {
           0%,
@@ -25,7 +27,32 @@
             transform: scale(1.15);
           }
         }
+
+        /* La main bouge de droite à gauche puis disparait */
+        @keyframes swipe-hint {
+          0% {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          15% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+          50% {
+            opacity: 1;
+            transform: translateX(-40px);
+          }
+          80% {
+            opacity: 0;
+            transform: translateX(-40px);
+          }
+          100% {
+            opacity: 0;
+            pointer-events: none;
+          }
+        }
       }
+
       @variant dark (&:where(.dark, .dark *));
       img {
         display: block;
@@ -224,7 +251,7 @@
         </svg>
       </button>
 
-      <!-- Prev Button (Caché sur mobile "hidden", visible sur desktop "sm:flex") -->
+      <!-- Prev (Visible uniquement Desktop) -->
       <button
         type="button"
         id="prev-btn"
@@ -246,7 +273,7 @@
         </svg>
       </button>
 
-      <!-- Next Button (Caché sur mobile "hidden", visible sur desktop "sm:flex") -->
+      <!-- Next (Visible uniquement Desktop) -->
       <button
         type="button"
         id="next-btn"
@@ -282,12 +309,39 @@
                 alt=""
                 class="block w-auto max-h-[85vh] object-contain select-none"
               />
+
               <!-- Watermark Logo -->
               <img
                 src="images/logo/logo.svg"
                 alt="Watermark"
                 class="absolute bottom-3 right-3 w-16 md:w-24 px-2 py-1 select-none pointer-events-none"
               />
+
+              <!-- INDICATEUR DE SWIPE (Visible seulement sur mobile sm:hidden) -->
+              <!-- Cet élément est centré sur l'image et joue l'animation 'swipe-hint' -->
+              <div
+                id="swipe-indicator"
+                class="absolute inset-0 flex items-center justify-center pointer-events-none sm:hidden opacity-0"
+              >
+                <div
+                  class="bg-black/60 backdrop-blur-md text-white p-4 rounded-full shadow-2xl"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-10 h-10"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
             <div
               class="bg-gray-100 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-800 px-4 py-3 w-full transition-colors"
@@ -315,8 +369,9 @@
         const modalImg = document.getElementById("modal-img-content");
         const modalTitle = document.getElementById("modal-title-content");
         const themeToggleBtn = document.getElementById("theme-toggle");
+        const swipeIndicator = document.getElementById("swipe-indicator");
 
-        // --- GESTION DARK MODE ---
+        // THEME
         if (
           localStorage.theme === "dark" ||
           (!("theme" in localStorage) &&
@@ -336,9 +391,8 @@
           }
         });
 
-        // --- GESTION GALERIE ---
+        // GALLERY
         let currentIndex = 0;
-
         galleryData.forEach((item, index) => {
           const article = document.createElement("article");
           article.className =
@@ -364,6 +418,12 @@
         const openModal = (index) => {
           updateModalContent(index);
           modal.classList.remove("hidden");
+
+          // Réinitialiser l'animation du Swipe Hint pour qu'elle se relance
+          swipeIndicator.classList.remove("animate-swipe-hint");
+          void swipeIndicator.offsetWidth; // Force reflow (hack CSS pour restart anim)
+          swipeIndicator.classList.add("animate-swipe-hint");
+
           setTimeout(() => {
             backdrop.classList.remove("opacity-0");
             panel.classList.remove("opacity-0", "scale-95");
@@ -395,10 +455,9 @@
           updateModalContent(newIndex);
         };
 
-        // --- GESTION DU SWIPE TACTILE ---
+        // SWIPE
         let touchStartX = 0;
         let touchEndX = 0;
-
         modal.addEventListener(
           "touchstart",
           (e) => {
@@ -406,26 +465,20 @@
           },
           { passive: true }
         );
-
         modal.addEventListener(
           "touchend",
           (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+            if (touchEndX < touchStartX - 50) showNext();
+            if (touchEndX > touchStartX + 50) showPrev();
           },
           { passive: true }
         );
 
-        function handleSwipe() {
-          // Seuil de détection (50px)
-          if (touchEndX < touchStartX - 50) showNext(); // Glissement vers la gauche -> Suivant
-          if (touchEndX > touchStartX + 50) showPrev(); // Glissement vers la droite -> Précédent
-        }
-
+        // EVENTS
         window.addEventListener("scroll", () => {
           const footerRect = footer.getBoundingClientRect();
-          const isFooterVisible = footerRect.top < window.innerHeight;
-          if (isFooterVisible) {
+          if (footerRect.top < window.innerHeight) {
             header.classList.add("opacity-0", "pointer-events-none");
           } else {
             header.classList.remove("opacity-0", "pointer-events-none");
