@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr" class="dark">
-  <!-- Classe "dark" par défaut pour le style initial -->
   <head>
     <title>Paris-Lille</title>
     <meta charset="utf-8" />
@@ -15,8 +14,6 @@
     <style type="text/tailwindcss">
       @theme {
         --color-theme-dark: #242629;
-
-        /* Animation "Battement de coeur" */
         --animate-heartbeat: heartbeat 2s ease-in-out infinite;
 
         @keyframes heartbeat {
@@ -29,15 +26,11 @@
           }
         }
       }
-
-      /* Configuration Dark Mode manuel pour Tailwind v4 Browser */
       @variant dark (&:where(.dark, .dark *));
-
       img {
         display: block;
       }
 
-      /* Transitions douces des couleurs */
       body,
       header,
       footer,
@@ -51,31 +44,35 @@
     </style>
   </head>
 
-  <!-- BODY : Couleurs dynamiques (Clair / Sombre) -->
   <body
     class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-300 font-sans antialiased is-preload"
   >
     <div id="wrapper" class="flex flex-col min-h-screen">
-      <!-- LOGO & SOUS-TITRE CENTRÉS EN HAUT -->
+      <!-- LOGO & TITRE -->
       <div class="py-12 w-full flex flex-col items-center justify-center">
         <img
           src="images/logo/logo.svg"
           alt="Paris-Lille"
           class="w-48 h-auto mb-4"
         />
-        <p
-          class="text-gray-400 text-lg font-light tracking-wide text-center px-4"
+        <h1
+          class="text-center text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
         >
-          Retour sur les collections de Paris-Lille
+          Retour sur les collections
+        </h1>
+        <p
+          class="mx-auto mt-6 max-w-3xl text-center text-lg text-slate-600 dark:text-slate-400 px-4"
+        >
+          Paris-Lille c'est fini mais pourquoi pas revoir encore une fois les
+          pièces qui ont été proposées entre 2020 et 2025 ?
         </p>
       </div>
 
-      <!-- Header (Bouton Info Flottant + Switcher) -->
+      <!-- HEADER FIXE -->
       <header
         id="header"
         class="fixed bottom-4 left-4 z-40 transition-opacity duration-300 flex gap-3"
       >
-        <!-- Bouton Info -->
         <nav>
           <a
             href="#footer"
@@ -97,13 +94,10 @@
             </svg>
           </a>
         </nav>
-
-        <!-- Bouton Switch Dark/Light Mode -->
         <button
           id="theme-toggle"
           class="block w-12 h-12 bg-white/90 dark:bg-gray-800/80 text-gray-900 dark:text-yellow-400 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all shadow-lg border border-gray-300 dark:border-gray-600 cursor-pointer"
         >
-          <!-- Icône Soleil (affichée en dark mode) -->
           <svg
             id="icon-sun"
             xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +113,6 @@
               d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
             />
           </svg>
-          <!-- Icône Lune (affichée en light mode) -->
           <svg
             id="icon-moon"
             xmlns="http://www.w3.org/2000/svg"
@@ -142,9 +135,7 @@
       <div
         id="main"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 w-full"
-      >
-        <!-- Les articles sont injectés ici par JS -->
-      </div>
+      ></div>
 
       <!-- Footer -->
       <footer
@@ -154,18 +145,8 @@
         <div
           class="inner split grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto"
         >
-          <!-- COLONNE GAUCHE -->
           <div>
             <section class="mb-8">
-              <!-- LOGO FOOTER -->
-              <div class="mb-6">
-                <img
-                  src="images/logo/logo.svg"
-                  alt="Paris-Lille"
-                  class="w-48 h-auto mx-auto md:mx-0"
-                />
-              </div>
-
               <p
                 class="leading-relaxed text-justify text-gray-700 dark:text-gray-400"
               >
@@ -188,7 +169,7 @@
               <h2
                 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white"
               >
-                Suivez moi sur
+                Suivez moi pour peut-être de nouvelles aventures sur
                 <a
                   href="https://www.instagram.com/paris.lille/"
                   target="_blank"
@@ -198,8 +179,6 @@
               </h2>
             </section>
           </div>
-
-          <!-- COLONNE DROITE : Cœur -->
           <div class="flex items-center justify-center">
             <img
               src="images/logo/heart.svg"
@@ -211,9 +190,7 @@
       </footer>
     </div>
 
-    <!-- ========================================== -->
-    <!-- MODALE (LIGHTBOX) -->
-    <!-- ========================================== -->
+    <!-- LIGHTBOX -->
     <div
       id="image-modal"
       class="fixed inset-0 z-50 hidden"
@@ -247,11 +224,11 @@
         </svg>
       </button>
 
-      <!-- Prev -->
+      <!-- Prev Button (Caché sur mobile "hidden", visible sur desktop "sm:flex") -->
       <button
         type="button"
         id="prev-btn"
-        class="fixed top-1/2 left-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
+        class="fixed top-1/2 left-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -269,11 +246,11 @@
         </svg>
       </button>
 
-      <!-- Next -->
+      <!-- Next Button (Caché sur mobile "hidden", visible sur desktop "sm:flex") -->
       <button
         type="button"
         id="next-btn"
-        class="fixed top-1/2 right-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
+        class="fixed top-1/2 right-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -298,7 +275,6 @@
             class="relative transform overflow-hidden rounded-lg bg-transparent text-left shadow-2xl transition-all w-fit max-w-full opacity-0 scale-95"
             id="modal-panel"
           >
-            <!-- Wrapper Relative pour positionner le logo sur l'image -->
             <div class="relative">
               <img
                 id="modal-img-content"
@@ -306,16 +282,13 @@
                 alt=""
                 class="block w-auto max-h-[85vh] object-contain select-none"
               />
-
-              <!-- LOGO DANS LA LIGHTBOX (En bas à droite de l'image) -->
+              <!-- Watermark Logo -->
               <img
                 src="images/logo/logo.svg"
                 alt="Watermark"
                 class="absolute bottom-3 right-3 w-16 md:w-24 px-2 py-1 select-none pointer-events-none"
               />
             </div>
-
-            <!-- Titre en bas de lightbox : Adaptatif dark/light -->
             <div
               class="bg-gray-100 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-800 px-4 py-3 w-full transition-colors"
             >
@@ -329,10 +302,8 @@
       </div>
     </div>
 
-    <!-- 1. CHARGEMENT DES DONNÉES -->
+    <!-- SCRIPTS -->
     <script src="data.js"></script>
-
-    <!-- 2. LOGIQUE DU SITE -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const mainContainer = document.getElementById("main");
@@ -345,7 +316,7 @@
         const modalTitle = document.getElementById("modal-title-content");
         const themeToggleBtn = document.getElementById("theme-toggle");
 
-        // --- GESTION DU THEME DARK/LIGHT ---
+        // --- GESTION DARK MODE ---
         if (
           localStorage.theme === "dark" ||
           (!("theme" in localStorage) &&
@@ -355,7 +326,6 @@
         } else {
           document.documentElement.classList.remove("dark");
         }
-
         themeToggleBtn.addEventListener("click", () => {
           if (document.documentElement.classList.contains("dark")) {
             document.documentElement.classList.remove("dark");
@@ -373,7 +343,6 @@
           const article = document.createElement("article");
           article.className =
             "thumb relative group overflow-hidden aspect-[4/3] sm:aspect-square";
-
           article.innerHTML = `
             <a href="${item.full}" class="block w-full h-full cursor-pointer" data-index="${index}">
               <img src="${item.thumb}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
@@ -426,10 +395,36 @@
           updateModalContent(newIndex);
         };
 
+        // --- GESTION DU SWIPE TACTILE ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        modal.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+          },
+          { passive: true }
+        );
+
+        modal.addEventListener(
+          "touchend",
+          (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+          },
+          { passive: true }
+        );
+
+        function handleSwipe() {
+          // Seuil de détection (50px)
+          if (touchEndX < touchStartX - 50) showNext(); // Glissement vers la gauche -> Suivant
+          if (touchEndX > touchStartX + 50) showPrev(); // Glissement vers la droite -> Précédent
+        }
+
         window.addEventListener("scroll", () => {
           const footerRect = footer.getBoundingClientRect();
           const isFooterVisible = footerRect.top < window.innerHeight;
-
           if (isFooterVisible) {
             header.classList.add("opacity-0", "pointer-events-none");
           } else {
@@ -455,9 +450,7 @@
         modal.addEventListener("click", (e) => {
           const isClickInsidePanel = panel.contains(e.target);
           const isClickOnNav = e.target.closest("button");
-          if (!isClickInsidePanel && !isClickOnNav) {
-            closeModal();
-          }
+          if (!isClickInsidePanel && !isClickOnNav) closeModal();
         });
 
         document.addEventListener("keydown", (e) => {
