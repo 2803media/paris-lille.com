@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
+  <!-- Classe "dark" par défaut pour le style initial -->
   <head>
     <title>Paris-Lille</title>
     <meta charset="utf-8" />
@@ -7,660 +8,167 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript
-      ><link rel="stylesheet" href="assets/css/noscript.css"
-    /></noscript>
+
+    <!-- Tailwind CSS v4 -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-theme-dark: #242629;
+
+        /* Animation "Battement de coeur" */
+        --animate-heartbeat: heartbeat 2s ease-in-out infinite;
+
+        @keyframes heartbeat {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.15);
+          }
+        }
+      }
+
+      /* Configuration Dark Mode manuel pour Tailwind v4 Browser */
+      @variant dark (&:where(.dark, .dark *));
+
+      img {
+        display: block;
+      }
+
+      /* Transitions douces des couleurs */
+      body,
+      header,
+      footer,
+      div,
+      p,
+      h2,
+      h3 {
+        transition-property: background-color, border-color, color;
+        transition-duration: 300ms;
+      }
+    </style>
   </head>
-  <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-        <h1>
-          <a href="index.html"><strong>Paris-Lille</strong></a>
-        </h1>
+
+  <!-- BODY : Couleurs dynamiques (Clair / Sombre) -->
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-300 font-sans antialiased is-preload"
+  >
+    <div id="wrapper" class="flex flex-col min-h-screen">
+      <!-- LOGO & SOUS-TITRE CENTRÉS EN HAUT -->
+      <div class="py-12 w-full flex flex-col items-center justify-center">
+        <img
+          src="images/logo/logo.svg"
+          alt="Paris-Lille"
+          class="w-48 h-auto mb-4"
+        />
+        <p
+          class="text-gray-400 text-lg font-light tracking-wide text-center px-4"
+        >
+          Retour sur les collections de Paris-Lille
+        </p>
+      </div>
+
+      <!-- Header (Bouton Info Flottant + Switcher) -->
+      <header
+        id="header"
+        class="fixed bottom-4 left-4 z-40 transition-opacity duration-300 flex gap-3"
+      >
+        <!-- Bouton Info -->
         <nav>
-          <ul>
-            <li>
-              <a href="#footer" class="icon solid fa-info-circle">A propos</a>
-            </li>
-          </ul>
+          <a
+            href="#footer"
+            class="block w-12 h-12 bg-white/90 dark:bg-gray-800/80 text-gray-900 dark:text-gray-300 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-blue-500 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all shadow-lg border border-gray-300 dark:border-gray-600 group"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+              />
+            </svg>
+          </a>
         </nav>
+
+        <!-- Bouton Switch Dark/Light Mode -->
+        <button
+          id="theme-toggle"
+          class="block w-12 h-12 bg-white/90 dark:bg-gray-800/80 text-gray-900 dark:text-yellow-400 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-all shadow-lg border border-gray-300 dark:border-gray-600 cursor-pointer"
+        >
+          <!-- Icône Soleil (affichée en dark mode) -->
+          <svg
+            id="icon-sun"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 hidden dark:block"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+            />
+          </svg>
+          <!-- Icône Lune (affichée en light mode) -->
+          <svg
+            id="icon-moon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 block dark:hidden"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+            />
+          </svg>
+        </button>
       </header>
 
-      <!-- Main -->
-      <div id="main">
-        <article class="thumb">
-          <a href="images/full/la-mini.webp" class="image">
-            <img src="images/thumb/la-mini.webp" alt="La mini" />
-          </a>
-          <h2>La mini</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/jupette-en-dentelle.webp" class="image">
-            <img
-              src="images/thumb/jupette-en-dentelle.webp"
-              alt="Jupette en dentelle"
-            />
-          </a>
-          <h2>Jupette en dentelle</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robette-rayee.webp" class="image">
-            <img
-              src="images/thumb/la-robette-rayee.webp"
-              alt="La robette rayée"
-            />
-          </a>
-          <h2>La robette rayée</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-blouse-anti-loose.webp" class="image">
-            <img
-              src="images/thumb/la-blouse-anti-loose.webp"
-              alt="La blouse anti-loose"
-            />
-          </a>
-          <h2>La blouse anti-loose</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-pluvieux.webp" class="image">
-            <img src="images/thumb/le-pluvieux.webp" alt="Le pluvieux" />
-          </a>
-          <h2>Le pluvieux</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-chemise-monsieur-madame.webp" class="image">
-            <img
-              src="images/thumb/la-chemise-monsieur-madame.webp"
-              alt="La chemise Monsieur Madame"
-            />
-          </a>
-          <h2>La chemise Monsieur Madame</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-bandana-raye.webp" class="image">
-            <img
-              src="images/thumb/le-bandana-raye.webp"
-              alt="Le bandana rayé"
-            />
-          </a>
-          <h2>Le bandana rayé</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-bandana-leo.webp" class="image">
-            <img src="images/thumb/le-bandana-leo.webp" alt="Le bandana léo" />
-          </a>
-          <h2>Le bandana léo</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-sweat-qui-a-la-frite-gris.webp" class="image">
-            <img
-              src="images/thumb/le-sweat-qui-a-la-frite-gris.webp"
-              alt="Le sweat qui a la frite gris"
-            />
-          </a>
-          <h2>Le sweat qui a la frite gris</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/tshirt-preums.webp" class="image">
-            <img src="images/thumb/tshirt-preums.webp" alt="Tshirt Preum's" />
-          </a>
-          <h2>Tshirt Preum's</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-hot-culotte.webp" class="image">
-            <img src="images/thumb/la-hot-culotte.webp" alt="La hot culotte" />
-          </a>
-          <h2>La hot culotte</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/taies-rayees.webp" class="image">
-            <img src="images/thumb/taies-rayees.webp" alt="Taies rayées" />
-          </a>
-          <h2>Taies rayées</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/taies-leo.webp" class="image">
-            <img src="images/thumb/taies-leo.webp" alt="Taies léo" />
-          </a>
-          <h2>Taies léo</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/blouse-claudine-leo.webp" class="image">
-            <img
-              src="images/thumb/blouse-claudine-leo.webp"
-              alt="Blouse claudine Léo"
-            />
-          </a>
-          <h2>Blouse claudine Léo</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/robette-en-broderie-anglaise.webp" class="image">
-            <img
-              src="images/thumb/robette-en-broderie-anglaise.webp"
-              alt="Robette en broderie anglaise"
-            />
-          </a>
-          <h2>Robette en broderie anglaise</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/robette-en-velour-rose.webp" class="image">
-            <img
-              src="images/thumb/robette-en-velour-rose.webp"
-              alt="Robette en velour rose"
-            />
-          </a>
-          <h2>Robette en velour rose</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/robette-en-velour-vert.webp" class="image">
-            <img
-              src="images/thumb/robette-en-velour-vert.webp"
-              alt="Robette en velour vert"
-            />
-          </a>
-          <h2>Robette en velour vert</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/blouse-anti-loose-carreaux.webp" class="image">
-            <img
-              src="images/thumb/blouse-anti-loose-carreaux.webp"
-              alt="Blouse anti-loose carreaux"
-            />
-          </a>
-          <h2>Blouse anti-loose carreaux</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/blouse-anti-loose-liberty.webp" class="image">
-            <img
-              src="images/thumb/blouse-anti-loose-liberty.webp"
-              alt="Blouse anti-loose liberty"
-            />
-          </a>
-          <h2>Blouse anti-loose liberty</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/veste-froufrou.webp" class="image">
-            <img src="images/thumb/veste-froufrou.webp" alt="Veste froufrou" />
-          </a>
-          <h2>Veste froufrou</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-frileux.webp" class="image">
-            <img src="images/thumb/le-frileux.webp" alt="Le frileux" />
-          </a>
-          <h2>Le frileux</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/le-sweat-qui-a-la-frite-marine.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/le-sweat-qui-a-la-frite-marine.webp"
-              alt="Le sweat qui a la frite marine"
-            />
-          </a>
-          <h2>Le sweat qui a la frite marine</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-robe-liberee-liberee-delivree.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-robe-liberee-liberee-delivree.webp"
-              alt="La robe libérée libérée délivrée"
-            />
-          </a>
-          <h2>La robe libérée libérée délivrée</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-jupe-en-jean-fiz.webp" class="image">
-            <img
-              src="images/thumb/la-jupe-en-jean-fiz.webp"
-              alt="La jupe en jean fiz"
-            />
-          </a>
-          <h2>La jupe en jean fiz</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-blouse-claudine-a-carreaux.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-blouse-claudine-a-carreaux.webp"
-              alt="La blouse claudine à carreaux"
-            />
-          </a>
-          <h2>La blouse claudine à carreaux</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-blazer-prosper.webp" class="image">
-            <img
-              src="images/thumb/le-blazer-prosper.webp"
-              alt="Le blazer Prosper"
-            />
-          </a>
-          <h2>Le blazer Prosper</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-combi-paris-lille.webp" class="image">
-            <img
-              src="images/thumb/la-combi-paris-lille.webp"
-              alt="La combi Paris-Lille"
-            />
-          </a>
-          <h2>La combi Paris-Lille</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-top-noeud-noeud.webp" class="image">
-            <img
-              src="images/thumb/le-top-noeud-noeud.webp"
-              alt="Le top Noeud Noeud"
-            />
-          </a>
-          <h2>Le top Noeud Noeud</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robe-noeud-noeud.webp" class="image">
-            <img
-              src="images/thumb/la-robe-noeud-noeud.webp"
-              alt="La robe Noeud Noeud"
-            />
-          </a>
-          <h2>La robe Noeud Noeud</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-tshirt-basique-blanc.webp" class="image">
-            <img
-              src="images/thumb/le-tshirt-basique-blanc.webp"
-              alt="Le Tshirt basique blanc"
-            />
-          </a>
-          <h2>Le Tshirt basique blanc</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/les-chemises-madame-petits-carreaux.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/les-chemises-madame-petits-carreaux.webp"
-              alt="Les chemises madame petits carreaux"
-            />
-          </a>
-          <h2>Les chemises madame petits carreaux</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/les-chemises-madame-grands-carreaux.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/les-chemises-madame-grands-carreaux.webp"
-              alt="Les chemises madame grands carreaux"
-            />
-          </a>
-          <h2>Les chemises madame grands carreaux</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/les-chemises-madame-lurex.webp" class="image">
-            <img
-              src="images/thumb/les-chemises-madame-lurex.webp"
-              alt="Les chemises madame lurex"
-            />
-          </a>
-          <h2>Les chemises madame lurex</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/blazer-prince-de-galles.webp" class="image">
-            <img
-              src="images/thumb/blazer-prince-de-galles.webp"
-              alt="Blazer Prince de Galles"
-            />
-          </a>
-          <h2>Blazer Prince de Galles</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robette-en-jean.webp" class="image">
-            <img
-              src="images/thumb/la-robette-en-jean.webp"
-              alt="La robette en jean"
-            />
-          </a>
-          <h2>La robette en jean</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-pluvieux-numero-2.webp" class="image">
-            <img
-              src="images/thumb/le-pluvieux-numero-2.webp"
-              alt="Le pluvieux numéro 2"
-            />
-          </a>
-          <h2>Le pluvieux numéro 2</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-blouse-frida.webp" class="image">
-            <img
-              src="images/thumb/la-blouse-frida.webp"
-              alt="La blouse frida"
-            />
-          </a>
-          <h2>La blouse frida</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-manteau-daddy.webp" class="image">
-            <img
-              src="images/thumb/le-manteau-daddy.webp"
-              alt="Le manteau Daddy"
-            />
-          </a>
-          <h2>Le manteau Daddy</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-bonnet-rene.webp" class="image">
-            <img src="images/thumb/le-bonnet-rene.webp" alt="Le bonnet René" />
-          </a>
-          <h2>Le bonnet René</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-maille-canaille.webp" class="image">
-            <img
-              src="images/thumb/la-maille-canaille.webp"
-              alt="La maille canaille"
-            />
-          </a>
-          <h2>La maille canaille</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-jupe-nauzan.webp" class="image">
-            <img src="images/thumb/la-jupe-nauzan.webp" alt="La jupe Nauzan" />
-          </a>
-          <h2>La jupe Nauzan</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-blouse-claudette-a-rayures.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-blouse-claudette-a-rayures.webp"
-              alt="La blouse Claudette à rayures"
-            />
-          </a>
-          <h2>La blouse Claudette à rayures</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-blouse-claudette-en-broderie-anglaise.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-blouse-claudette-en-broderie-anglaise.webp"
-              alt="La blouse Claudette en broderie anglaise"
-            />
-          </a>
-          <h2>La blouse Claudette en broderie anglaise</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-chemise-madame-rayee-jaune.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-chemise-madame-rayee-jaune.webp"
-              alt="La chemise Madame rayée jaune"
-            />
-          </a>
-          <h2>La chemise Madame rayée jaune</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-short-ponta.webp" class="image">
-            <img src="images/thumb/le-short-ponta.webp" alt="Le short Ponta" />
-          </a>
-          <h2>Le short Ponta</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-jupon-ninon.webp" class="image">
-            <img src="images/thumb/le-jupon-ninon.webp" alt="Le jupon Ninon" />
-          </a>
-          <h2>Le jupon Ninon</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-blazer-ecru.webp" class="image">
-            <img src="images/thumb/le-blazer-ecru.webp" alt="Le blazer écru" />
-          </a>
-          <h2>Le blazer écru</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-basique-gris.webp" class="image">
-            <img
-              src="images/thumb/le-basique-gris.webp"
-              alt="Le basique gris"
-            />
-          </a>
-          <h2>Le basique gris</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-marcel-blanc.webp" class="image">
-            <img
-              src="images/thumb/le-marcel-blanc.webp"
-              alt="Le marcel blanc"
-            />
-          </a>
-          <h2>Le marcel blanc</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-sweat-pepite.webp" class="image">
-            <img
-              src="images/thumb/le-sweat-pepite.webp"
-              alt="Le sweat pépite"
-            />
-          </a>
-          <h2>Le sweat pépite</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robe-sarah-vichy-noir.webp" class="image">
-            <img
-              src="images/thumb/la-robe-sarah-vichy-noir.webp"
-              alt="La robe Sarah vichy noir"
-            />
-          </a>
-          <h2>La robe Sarah vichy noir</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-blouse-violette-vichy-noir.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-blouse-violette-vichy-noir.webp"
-              alt="La blouse Violette vichy noir"
-            />
-          </a>
-          <h2>La blouse Violette vichy noir</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robe-louison.webp" class="image">
-            <img
-              src="images/thumb/la-robe-louison.webp"
-              alt="La robe louison"
-            />
-          </a>
-          <h2>La robe louison</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-marcel-marine.webp" class="image">
-            <img
-              src="images/thumb/le-marcel-marine.webp"
-              alt="Le marcel marine"
-            />
-          </a>
-          <h2>Le marcel marine</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robe-sarah-osaka.webp" class="image">
-            <img
-              src="images/thumb/la-robe-sarah-osaka.webp"
-              alt="La robe Sarah Osaka"
-            />
-          </a>
-          <h2>La robe Sarah Osaka</h2>
-        </article>
-
-        <article class="thumb">
-          <a
-            href="images/full/la-robe-sarah-vichy-tangerine.webp"
-            class="image"
-          >
-            <img
-              src="images/thumb/la-robe-sarah-vichy-tangerine.webp"
-              alt="La robe Sarah vichy tangerine"
-            />
-          </a>
-          <h2>La robe Sarah vichy tangerine</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-blouse-pauline-bonbon.webp" class="image">
-            <img
-              src="images/thumb/la-blouse-pauline-bonbon.webp"
-              alt="La blouse Pauline Bonbon"
-            />
-          </a>
-          <h2>La blouse Pauline Bonbon</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-cabas-paula.webp" class="image">
-            <img src="images/thumb/le-cabas-paula.webp" alt="Le cabas Paula" />
-          </a>
-          <h2>Le cabas Paula</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-jupe-sharleen.webp" class="image">
-            <img
-              src="images/thumb/la-jupe-sharleen.webp"
-              alt="La jupe Sharleen"
-            />
-          </a>
-          <h2>La jupe Sharleen</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-basique-noir.webp" class="image">
-            <img
-              src="images/thumb/le-basique-noir.webp"
-              alt="Le basique noir"
-            />
-          </a>
-          <h2>Le basique noir</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-jupe-bb-vichy-rouge.webp" class="image">
-            <img
-              src="images/thumb/la-jupe-bb-vichy-rouge.webp"
-              alt="La jupe BB vichy rouge"
-            />
-          </a>
-          <h2>La jupe BB vichy rouge</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-jupe-boheme-porto.webp" class="image">
-            <img
-              src="images/thumb/la-jupe-boheme-porto.webp"
-              alt="La jupe Bohème Porto"
-            />
-          </a>
-          <h2>La jupe Bohème Porto</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/le-tshirt-malo.webp" class="image">
-            <img src="images/thumb/le-tshirt-malo.webp" alt="Le Tshirt Malo" />
-          </a>
-          <h2>Le Tshirt Malo</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="images/full/la-robe-portofino.webp" class="image">
-            <img
-              src="images/thumb/la-robe-portofino.webp"
-              alt="La robe Portofino"
-            />
-          </a>
-          <h2>La robe Portofino</h2>
-        </article>
+      <!-- Main Gallery -->
+      <div
+        id="main"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 w-full"
+      >
+        <!-- Les articles sont injectés ici par JS -->
       </div>
 
       <!-- Footer -->
-      <footer id="footer" class="panel">
-        <div class="inner split">
+      <footer
+        id="footer"
+        class="panel bg-gray-200 text-gray-600 dark:bg-gray-800 dark:text-gray-400 p-8 md:p-12 mt-auto border-t border-gray-300 dark:border-gray-700 transition-colors"
+      >
+        <div
+          class="inner split grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto"
+        >
+          <!-- COLONNE GAUCHE -->
           <div>
-            <section>
-              <h2>Paris-Lille</h2>
-              <p>
+            <section class="mb-8">
+              <!-- LOGO FOOTER -->
+              <div class="mb-6">
+                <img
+                  src="images/logo/logo.svg"
+                  alt="Paris-Lille"
+                  class="w-48 h-auto mx-auto md:mx-0"
+                />
+              </div>
+
+              <p
+                class="leading-relaxed text-justify text-gray-700 dark:text-gray-400"
+              >
                 Camille est une lilloise de 45 ans maman de 4 filles. Ancienne
                 avocate, elle occupe toujours un poste de Maître de Conférences
                 en droit social. Parallèlement à sa carrière universitaire, elle
@@ -677,66 +185,288 @@
               </p>
             </section>
             <section>
-              <h2>Suivez moi sur ...</h2>
-              <ul class="icons">
-                <li>
-                  <a
-                    href="https://www.instagram.com/paris.lille/"
-                    target="_blank"
-                    class="icon brands fa-instagram"
-                    ><span class="label">Instagram</span></a
-                  >
-                </li>
-              </ul>
+              <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-white"
+              >
+                Suivez moi sur
+                <a
+                  href="https://www.instagram.com/paris.lille/"
+                  target="_blank"
+                  class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white underline decoration-1 underline-offset-4"
+                  >Instagram</a
+                >
+              </h2>
             </section>
           </div>
-          <div>
-            <section>
-              <h2>Get in touch</h2>
-              <form method="post" action="#">
-                <div class="fields">
-                  <div class="field half">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div class="field half">
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div class="field">
-                    <textarea
-                      name="message"
-                      id="message"
-                      rows="4"
-                      placeholder="Message"
-                    ></textarea>
-                  </div>
-                </div>
-                <ul class="actions">
-                  <li><input type="submit" value="Send" class="primary" /></li>
-                  <li><input type="reset" value="Reset" /></li>
-                </ul>
-              </form>
-            </section>
+
+          <!-- COLONNE DROITE : Cœur -->
+          <div class="flex items-center justify-center">
+            <img
+              src="images/logo/heart.svg"
+              alt="Love"
+              class="w-32 h-32 md:w-48 md:h-48 animate-heartbeat drop-shadow-lg"
+            />
           </div>
         </div>
       </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.poptrox.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- ========================================== -->
+    <!-- MODALE (LIGHTBOX) -->
+    <!-- ========================================== -->
+    <div
+      id="image-modal"
+      class="fixed inset-0 z-50 hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-sm transition-opacity opacity-0"
+        id="modal-backdrop"
+      ></div>
+
+      <!-- Close -->
+      <button
+        type="button"
+        id="close-modal-btn"
+        class="fixed top-6 right-6 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200 dark:bg-black/50 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-full w-12 h-12 flex items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <!-- Prev -->
+      <button
+        type="button"
+        id="prev-btn"
+        class="fixed top-1/2 left-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+
+      <!-- Next -->
+      <button
+        type="button"
+        id="next-btn"
+        class="fixed top-1/2 right-4 -translate-y-1/2 z-[70] text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-200/50 dark:bg-black/30 hover:bg-gray-300 dark:hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center transition-all cursor-pointer border border-gray-300 dark:border-white/10 hidden sm:flex"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </button>
+
+      <!-- Panel -->
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-transparent text-left shadow-2xl transition-all w-fit max-w-full opacity-0 scale-95"
+            id="modal-panel"
+          >
+            <!-- Wrapper Relative pour positionner le logo sur l'image -->
+            <div class="relative">
+              <img
+                id="modal-img-content"
+                src=""
+                alt=""
+                class="block w-auto max-h-[85vh] object-contain select-none"
+              />
+
+              <!-- LOGO DANS LA LIGHTBOX (En bas à droite de l'image) -->
+              <img
+                src="images/logo/logo.svg"
+                alt="Watermark"
+                class="absolute bottom-3 right-3 w-16 md:w-24 px-2 py-1 select-none pointer-events-none"
+              />
+            </div>
+
+            <!-- Titre en bas de lightbox : Adaptatif dark/light -->
+            <div
+              class="bg-gray-100 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-800 px-4 py-3 w-full transition-colors"
+            >
+              <h3
+                class="text-lg font-medium text-gray-800 dark:text-white text-center break-words"
+                id="modal-title-content"
+              ></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. CHARGEMENT DES DONNÉES -->
+    <script src="data.js"></script>
+
+    <!-- 2. LOGIQUE DU SITE -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const mainContainer = document.getElementById("main");
+        const header = document.getElementById("header");
+        const footer = document.getElementById("footer");
+        const modal = document.getElementById("image-modal");
+        const backdrop = document.getElementById("modal-backdrop");
+        const panel = document.getElementById("modal-panel");
+        const modalImg = document.getElementById("modal-img-content");
+        const modalTitle = document.getElementById("modal-title-content");
+        const themeToggleBtn = document.getElementById("theme-toggle");
+
+        // --- GESTION DU THEME DARK/LIGHT ---
+        if (
+          localStorage.theme === "dark" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        themeToggleBtn.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.theme = "light";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.theme = "dark";
+          }
+        });
+
+        // --- GESTION GALERIE ---
+        let currentIndex = 0;
+
+        galleryData.forEach((item, index) => {
+          const article = document.createElement("article");
+          article.className =
+            "thumb relative group overflow-hidden aspect-[4/3] sm:aspect-square";
+
+          article.innerHTML = `
+            <a href="${item.full}" class="block w-full h-full cursor-pointer" data-index="${index}">
+              <img src="${item.thumb}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+            </a>
+            <h2 class="absolute bottom-0 left-0 w-full p-3 pt-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent text-white text-center text-sm sm:text-base font-medium pointer-events-none">
+              ${item.title}
+            </h2>
+          `;
+          mainContainer.appendChild(article);
+        });
+
+        const updateModalContent = (index) => {
+          const item = galleryData[index];
+          modalImg.src = item.full;
+          modalTitle.textContent = item.title;
+          currentIndex = index;
+        };
+
+        const openModal = (index) => {
+          updateModalContent(index);
+          modal.classList.remove("hidden");
+          setTimeout(() => {
+            backdrop.classList.remove("opacity-0");
+            panel.classList.remove("opacity-0", "scale-95");
+            panel.classList.add("opacity-100", "scale-100");
+          }, 10);
+        };
+
+        const closeModal = () => {
+          backdrop.classList.add("opacity-0");
+          panel.classList.remove("opacity-100", "scale-100");
+          panel.classList.add("opacity-0", "scale-95");
+          setTimeout(() => {
+            modal.classList.add("hidden");
+            modalImg.src = "";
+          }, 300);
+        };
+
+        const showNext = (e) => {
+          if (e) e.stopPropagation();
+          let newIndex = currentIndex + 1;
+          if (newIndex >= galleryData.length) newIndex = 0;
+          updateModalContent(newIndex);
+        };
+
+        const showPrev = (e) => {
+          if (e) e.stopPropagation();
+          let newIndex = currentIndex - 1;
+          if (newIndex < 0) newIndex = galleryData.length - 1;
+          updateModalContent(newIndex);
+        };
+
+        window.addEventListener("scroll", () => {
+          const footerRect = footer.getBoundingClientRect();
+          const isFooterVisible = footerRect.top < window.innerHeight;
+
+          if (isFooterVisible) {
+            header.classList.add("opacity-0", "pointer-events-none");
+          } else {
+            header.classList.remove("opacity-0", "pointer-events-none");
+          }
+        });
+
+        mainContainer.addEventListener("click", (e) => {
+          const link = e.target.closest("a");
+          if (link) {
+            e.preventDefault();
+            const index = parseInt(link.getAttribute("data-index"));
+            openModal(index);
+          }
+        });
+
+        document
+          .getElementById("close-modal-btn")
+          .addEventListener("click", closeModal);
+        document.getElementById("prev-btn").addEventListener("click", showPrev);
+        document.getElementById("next-btn").addEventListener("click", showNext);
+
+        modal.addEventListener("click", (e) => {
+          const isClickInsidePanel = panel.contains(e.target);
+          const isClickOnNav = e.target.closest("button");
+          if (!isClickInsidePanel && !isClickOnNav) {
+            closeModal();
+          }
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (modal.classList.contains("hidden")) return;
+          if (e.key === "Escape") closeModal();
+          if (e.key === "ArrowRight") showNext();
+          if (e.key === "ArrowLeft") showPrev();
+        });
+      });
+    </script>
   </body>
 </html>
