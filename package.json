@@ -1,0 +1,13 @@
+{
+  "name": "paris-lille",
+  "version": "1.0.0",
+  "description": "Site Paris-Lille",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./css/main.css",
+    "watch": "tailwindcss -i ./src/input.css -o ./css/main.css --watch",
+    "minify": "tailwindcss -i ./src/input.css -o ./css/main.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

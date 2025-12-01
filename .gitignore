@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Fichiers de build (optionnel, selon votre workflow)
+.cache/
+dist/
+build/
+*.log
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.*.local
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db

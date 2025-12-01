@@ -29,8 +29,8 @@
     />
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Tailwind CSS v4 -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Tailwind CSS -->
+    <link href="css/main.css" rel="stylesheet" />
     <script
       async
       defer
@@ -38,49 +38,7 @@
       src="https://analytics.2803media.fr/js/script.js"
     ></script>
 
-    <style type="text/tailwindcss">
-      @theme {
-        --color-theme-dark: #242629;
-        --animate-heartbeat: heartbeat 2s ease-in-out infinite;
-        /* Animation de l'indicateur de swipe */
-        --animate-swipe-hint: swipe-hint 2.5s ease-in-out forwards;
-
-        @keyframes heartbeat {
-          0%,
-          100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.15);
-          }
-        }
-
-        /* La main bouge de droite à gauche puis disparait */
-        @keyframes swipe-hint {
-          0% {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          15% {
-            opacity: 1;
-            transform: translateX(0);
-          }
-          50% {
-            opacity: 1;
-            transform: translateX(-40px);
-          }
-          80% {
-            opacity: 0;
-            transform: translateX(-40px);
-          }
-          100% {
-            opacity: 0;
-            pointer-events: none;
-          }
-        }
-      }
-
-      @variant dark (&:where(.dark, .dark *));
+    <style>
       img {
         display: block;
       }
