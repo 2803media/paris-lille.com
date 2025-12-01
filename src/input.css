@@ -1,3 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tailwindcss/utilities";
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes swipe-hint {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-40px);
+  }
+  80% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+img {
+  display: block;
+}
+
+body,
+header,
+footer,
+div,
+p,
+h2,
+h3 {
+  transition-property: background-color, border-color, color;
+  transition-duration: 300ms;
+}

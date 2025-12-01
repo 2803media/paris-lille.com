@@ -8,6 +8,6 @@
     "minify": "tailwindcss -i ./src/input.css -o ./css/main.css --minify"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^4.1.17"
   }
 }

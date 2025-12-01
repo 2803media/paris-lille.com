@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./index.html", "./data.js"],
   darkMode: "class",
   theme: {
@@ -21,10 +21,6 @@ module.exports = {
           "100%": { opacity: "0", pointerEvents: "none" },
         },
       },
-      colors: {
-        "theme-dark": "#242629",
-      },
     },
   },
-  plugins: [],
 };
