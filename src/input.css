@@ -1,6 +1,17 @@
 @import "tailwindcss";
-@import "tailwindcss/utilities";
 
+/* 
+   👇 C'EST LA LIGNE MAGIQUE POUR LA V4 
+   Elle dit à Tailwind : "Le mode dark s'active quand il y a la classe .dark, pas le système."
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --animate-heartbeat: heartbeat 2s ease-in-out infinite;
+  --animate-swipe-hint: swipe-hint 2.5s ease-in-out forwards;
+}
+
+/* Les keyframes restent du CSS standard */
 @keyframes heartbeat {
   0%,
   100% {
@@ -34,6 +45,7 @@
   }
 }
 
+/* Styles globaux */
 img {
   display: block;
 }
@@ -47,4 +59,13 @@ h2,
 h3 {
   transition-property: background-color, border-color, color;
   transition-duration: 300ms;
+}
+
+/* Classes utilitaires explicites (optionnel si tu utilises --animate-*, mais utile pour la complétion) */
+@utility animate-heartbeat {
+  animation: var(--animate-heartbeat);
+}
+
+@utility animate-swipe-hint {
+  animation: var(--animate-swipe-hint);
 }
