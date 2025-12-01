@@ -31,6 +31,12 @@
 
     <!-- Tailwind CSS v4 -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script
+      async
+      defer
+      data-domain="paris-lille.com"
+      src="https://analytics.2803media.fr/js/script.js"
+    ></script>
 
     <style type="text/tailwindcss">
       @theme {
@@ -102,6 +108,9 @@
           src="images/logo/logo.svg"
           alt="Paris-Lille"
           class="w-48 h-auto mb-4"
+          loading="lazy"
+          width="192"
+          height="auto"
         />
         <h1
           class="text-center text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
@@ -239,6 +248,9 @@
               src="images/logo/heart.svg"
               alt="Love"
               class="w-32 h-32 md:w-48 md:h-48 animate-heartbeat drop-shadow-lg"
+              loading="eager"
+              width="192"
+              height="192"
             />
           </div>
         </div>
@@ -430,7 +442,15 @@
             "thumb relative group overflow-hidden aspect-[4/3] sm:aspect-square";
           article.innerHTML = `
             <a href="${item.full}" class="block w-full h-full cursor-pointer" data-index="${index}">
-              <img src="${item.thumb}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+              <img 
+                src="${item.thumb}" 
+                alt="${item.title}" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                loading="lazy" 
+                decoding="async"
+                width="400"
+                height="300"
+              />
             </a>
             <h2 class="absolute bottom-0 left-0 w-full p-3 pt-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent text-white text-center text-sm sm:text-base font-medium pointer-events-none">
               ${item.title}
