@@ -59,58 +59,9 @@
   <body
     class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-300 font-sans antialiased is-preload"
   >
-    <div id="wrapper" class="flex flex-col min-h-screen">
-      <!-- LOGO & TITRE -->
-      <div class="py-12 w-full flex flex-col items-center justify-center">
-        <img
-          src="images/logo/logo.svg"
-          alt="Paris-Lille"
-          width="192"
-          height="192"
-          class="w-48 h-auto mb-4"
-          style="aspect-ratio: 192/192"
-          loading="eager"
-          decoding="sync"
-        />
-        <h1
-          class="text-center text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
-        >
-          Retour sur les collections
-        </h1>
-        <p
-          class="mx-auto mt-6 max-w-3xl text-center text-lg text-slate-600 dark:text-slate-400 px-4"
-        >
-          Paris-Lille c'est fini mais pourquoi pas revoir une dernière fois les
-          pièces made in France qui ont été proposées entre 2020 et 2025 ?
-        </p>
-      </div>
-
-      <!-- HEADER FIXE -->
-      <header
-        id="header"
-        class="fixed bottom-4 left-4 z-40 transition-opacity duration-300 flex gap-3"
-      >
-        <nav>
-          <a
-            href="#footer"
-            class="block w-12 h-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-300 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-blue-500 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all shadow-lg border border-gray-300 dark:border-gray-600 group"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-              />
-            </svg>
-          </a>
-        </nav>
+    <!-- BOUTON DE THÈME EN HAUT À DROITE -->
+    <div class="relative w-full">
+      <header class="absolute top-4 right-4 z-40">
         <button
           id="theme-toggle"
           aria-label="Basculer entre le mode clair et sombre"
@@ -149,6 +100,59 @@
           </svg>
         </button>
       </header>
+    </div>
+
+    <div id="wrapper" class="flex flex-col min-h-screen">
+      <!-- LOGO & TITRE -->
+      <div class="pt-4 pb-12 w-full flex flex-col items-center justify-center">
+        <img
+          src="images/logo/logo.svg"
+          alt="Paris-Lille"
+          width="192"
+          height="192"
+          class="w-48 h-auto mb-4"
+          style="aspect-ratio: 192/192"
+          loading="eager"
+          decoding="sync"
+        />
+        <h1
+          class="text-center text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
+        >
+          Retour sur les collections
+        </h1>
+        <p
+          class="mx-auto mt-6 max-w-3xl text-center text-lg text-slate-600 dark:text-slate-400 px-4"
+        >
+          Paris-Lille c'est fini mais pourquoi pas revoir une dernière fois les
+          pièces made in France qui ont été proposées entre 2020 et 2025 ?
+        </p>
+      </div>
+
+      <!-- BOUTON FIXE EN BAS A GAUCHE -->
+      <div
+        id="header"
+        class="fixed bottom-4 left-4 z-40 transition-opacity duration-300"
+      >
+        <a
+          href="#footer"
+          class="block w-12 h-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-300 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-blue-500 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all shadow-lg border border-gray-300 dark:border-gray-600 group"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+            />
+          </svg>
+        </a>
+      </div>
 
       <!-- Main Gallery -->
       <div
