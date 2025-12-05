@@ -17,7 +17,7 @@ Ce dépôt contient le code source du site web personnel de Paris-Lille, présen
 ## 🛠 Technologies utilisées
 
 - HTML5
-- CSS3 / Tailwind CSS
+- CSS3 / Tailwind CSS 4
 - JavaScript
 - [Lightbox](https://lokeshdhakar.com/projects/lightbox2/) pour la galerie d'images
 
