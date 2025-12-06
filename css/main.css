@@ -216,6 +216,9 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -399,6 +402,12 @@
   }
   .animate-heartbeat {
     animation: var(--animate-heartbeat);
+  }
+  .animate-swipe-hint {
+    animation: var(--animate-swipe-hint);
+  }
+  .animate-swipe-hint {
+    animation: var(--animate-swipe-hint);
   }
   .cursor-pointer {
     cursor: pointer;

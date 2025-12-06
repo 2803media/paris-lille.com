@@ -1,6 +1,6 @@
 {
   "name": "paris-lille",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Site Paris-Lille",
   "scripts": {
     "build": "npm run generate-version && npm run optimize-images && tailwindcss -i ./src/input.css -o ./css/main.css",

@@ -400,7 +400,8 @@
               <!-- Cet élément est centré sur l'image et joue l'animation 'swipe-hint' -->
               <div
                 id="swipe-indicator"
-                class="absolute inset-0 flex items-center justify-center pointer-events-none sm:hidden opacity-0"
+                class="absolute inset-0 flex items-center justify-center pointer-events-none sm:hidden opacity-0 animate-swipe-hint"
+                style="animation-iteration-count: 1"
               >
                 <div
                   class="bg-black/60 backdrop-blur-md text-white p-4 rounded-full shadow-2xl"
@@ -554,6 +555,22 @@
           mainContainer.appendChild(article);
         });
 
+        const showSwipeIndicator = () => {
+          // Supprimer la classe d'animation si elle existe déjà
+          swipeIndicator.classList.remove("animate-swipe-hint");
+
+          // Forcer un reflow pour réinitialiser l'animation
+          void swipeIndicator.offsetWidth;
+
+          // Ajouter la classe d'animation
+          swipeIndicator.classList.add("animate-swipe-hint");
+
+          // Nettoyer après l'animation (optionnel)
+          setTimeout(() => {
+            swipeIndicator.classList.remove("animate-swipe-hint");
+          }, 2500);
+        };
+
         const updateModalContent = (index) => {
           const item = galleryData[index];
           modalImg.src = item.full;
@@ -565,9 +582,8 @@
           updateModalContent(index);
           document.body.classList.add("modal-open");
           document.getElementById("image-modal").classList.remove("hidden");
-          disableBodyScroll(); // Désactive le défilement de la page
+          disableBodyScroll();
 
-          // Ajout d'un délai pour permettre l'animation
           setTimeout(() => {
             document
               .getElementById("modal-backdrop")
@@ -575,6 +591,12 @@
             document
               .getElementById("modal-panel")
               .classList.add("opacity-100", "scale-100");
+
+            // Afficher l'indicateur de swipe sur mobile
+            if (window.innerWidth < 640) {
+              // Petit délai pour que le modal soit bien visible
+              setTimeout(showSwipeIndicator, 300);
+            }
           }, 10);
         };
 
@@ -624,8 +646,18 @@
           "touchend",
           (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            if (touchEndX < touchStartX - 50) showNext();
-            if (touchEndX > touchStartX + 50) showPrev();
+            const swipeDistance = touchEndX - touchStartX;
+
+            if (Math.abs(swipeDistance) > 50) {
+              // Cacher l'indicateur dès qu'un swipe est détecté
+              swipeIndicator.classList.remove("animate-swipe-hint");
+
+              if (swipeDistance < 0) {
+                showNext();
+              } else {
+                showPrev();
+              }
+            }
           },
           { passive: true }
         );
