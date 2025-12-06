@@ -41,6 +41,10 @@ Ce dépôt contient le code source du site web personnel de Paris-Lille, présen
    npm run dev
    ```
 
+## Score Lighthouse
+
+![lighthouse score](images/full/lighthouse.jpg)
+
 ## 📝 Licence
 
 Le code source de ce site est disponible sous licence MIT. Cependant, veuillez noter que cette licence ne s'applique pas aux images et autres éléments multimédias qui restent la propriété exclusive de Camille Blanquart.
