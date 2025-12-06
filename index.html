@@ -279,19 +279,20 @@
             />
           </div>
         </div>
-
-        <script>
-          document.getElementById("current-year").textContent =
-            new Date().getFullYear();
-        </script>
       </footer>
       <!-- Copyright -->
       <div
         id="copyright"
-        class="text-center py-6 text-sm text-gray-500 dark:text-gray-500 border-t border-gray-200 dark:border-gray-800 mt-8"
+        class="text-center py-6 px-4 text-sm text-gray-500 dark:text-gray-500 mt-8 max-w-2xl sm:max-w-4xl mx-auto w-full"
       >
-        &copy; 2020-<span id="current-year"></span> Camille Blanquart - Tous
-        droits réservés - Version <span id="app-version"></span>
+        <div class="break-words">
+          &copy; 2020-<span id="current-year"></span> Camille Blanquart - Tous
+          droits réservés - version <span id="app-version"></span>
+        </div>
+        <script>
+          document.getElementById("current-year").textContent =
+            new Date().getFullYear();
+        </script>
       </div>
     </div>
 
@@ -470,6 +471,16 @@
         });
       });
     </script>
+    <script src="js/version.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const versionElement = document.getElementById("app-version");
+        console.log("version", window.APP_VERSION);
+        if (versionElement && window.APP_VERSION) {
+          versionElement.textContent = APP_VERSION;
+        }
+      });
+    </script>
     <script>
       // Calcul de l'âge de Camille (née en 1976)
       document.addEventListener("DOMContentLoaded", function () {
@@ -479,12 +490,6 @@
         const ageElement = document.getElementById("age");
         if (ageElement) {
           ageElement.textContent = currentYear - birthYear;
-        }
-
-        // Version de l'application (version statique pour le moment)
-        const versionElement = document.getElementById("app-version");
-        if (versionElement) {
-          versionElement.textContent = "1.0.2"; // Version mise à jour manuellement
         }
       });
 
