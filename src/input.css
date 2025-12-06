@@ -23,25 +23,21 @@
 }
 
 @keyframes swipe-hint {
-  0% {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  15% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-40px);
-  }
-  80% {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
+  0%,
   100% {
     opacity: 0;
-    pointer-events: none;
+    transform: translateX(0) scale(0.9);
+  }
+  20%,
+  80% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  40% {
+    transform: translateX(-30px) scale(1);
+  }
+  60% {
+    transform: translateX(30px) scale(1);
   }
 }
 

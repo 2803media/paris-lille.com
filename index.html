@@ -556,18 +556,21 @@
         });
 
         const showSwipeIndicator = () => {
-          // Supprimer la classe d'animation si elle existe déjà
+          // D'abord rendre visible
+          swipeIndicator.classList.remove("opacity-0");
+          swipeIndicator.classList.add("opacity-100");
+
+          // Puis lancer l'animation
           swipeIndicator.classList.remove("animate-swipe-hint");
-
-          // Forcer un reflow pour réinitialiser l'animation
-          void swipeIndicator.offsetWidth;
-
-          // Ajouter la classe d'animation
+          void swipeIndicator.offsetWidth; // Force reflow
           swipeIndicator.classList.add("animate-swipe-hint");
 
-          // Nettoyer après l'animation (optionnel)
           setTimeout(() => {
-            swipeIndicator.classList.remove("animate-swipe-hint");
+            swipeIndicator.classList.remove(
+              "animate-swipe-hint",
+              "opacity-100"
+            );
+            swipeIndicator.classList.add("opacity-0");
           }, 2500);
         };
 
