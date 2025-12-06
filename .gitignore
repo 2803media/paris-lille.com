@@ -15,3 +15,6 @@ build/
 # Système d'exploitation
 .DS_Store
 Thumbs.db
+
+# Image optimization backup
+/images-original/*

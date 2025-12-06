@@ -1,16 +1,20 @@
 {
   "name": "paris-lille",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Site Paris-Lille",
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./css/main.css",
+    "build": "npm run optimize-images && tailwindcss -i ./src/input.css -o ./css/main.css",
     "watch": "tailwindcss -i ./src/input.css -o ./css/main.css --watch",
-    "minify": "tailwindcss -i ./src/input.css -o ./css/main.css --minify"
+    "minify": "npm run optimize-images && tailwindcss -i ./src/input.css -o ./css/main.css --minify",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",
     "autoprefixer": "^10.4.22",
-    "postcss": "^8.5.6"
+    "fs-extra": "^11.3.2",
+    "glob": "^13.0.0",
+    "postcss": "^8.5.6",
+    "sharp": "^0.34.5"
   },
   "dependencies": {
     "tailwindcss": "^4.1.17"
