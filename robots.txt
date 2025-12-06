@@ -1,0 +1,32 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Fichiers et dossiers à ignorer
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /config/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.lock$
+Disallow: /*.log$
+
+
+# Paramètres d'URL à ignorer (si vous en utilisez)
+# Disallow: /*?*
+
+# Désactiver l'indexation des dossiers d'assets
+Disallow: /css/
+Disallow: /js/
+Disallow: /images-original/
+
+# Blocage des robots d'archivage (optionnel)
+User-agent: ia_archiver
+Disallow: /
+
+# Blocage des robots d'archivage d'images (optionnel)
+User-agent: Googlebot-Image
+Disallow: /images-original/
+
+# Délai de crawl (en secondes)
+# Crawl-delay: 10
