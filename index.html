@@ -46,6 +46,11 @@
     ></script>
 
     <style>
+      /* Smooth scrolling pour tout le document */
+      html {
+        scroll-behavior: smooth;
+      }
+
       img {
         display: block;
       }
@@ -141,9 +146,12 @@
         id="header"
         class="fixed bottom-4 left-4 z-40 transition-opacity duration-300"
       >
-        <a
-          href="#footer"
-          class="block w-12 h-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-300 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-slate-700 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all shadow-lg border border-gray-300 dark:border-gray-600 group"
+        <button
+          id="about-button"
+          class="cursor-pointer block w-12 h-12 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-300 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-slate-700 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all shadow-lg border border-gray-300 dark:border-gray-600 group"
+          aria-label="À propos de Paris-Lille"
+          aria-expanded="false"
+          aria-controls="footer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +167,7 @@
               d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
             />
           </svg>
-        </a>
+        </button>
       </div>
 
       <!-- Main Gallery -->
@@ -425,6 +433,43 @@
     <!-- SCRIPTS -->
     <script src="data.js"></script>
     <script>
+      // Fonctions pour gérer le défilement de la page
+      function disableBodyScroll() {
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight =
+          window.innerWidth - document.documentElement.clientWidth + "px";
+      }
+
+      function enableBodyScroll() {
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+      }
+
+      // Gestion du bouton "À propos"
+      document.addEventListener("DOMContentLoaded", function () {
+        const aboutButton = document.getElementById("about-button");
+        const footer = document.getElementById("footer");
+
+        aboutButton.addEventListener("click", function () {
+          // Faire défiler jusqu'au footer de manière fluide
+          footer.scrollIntoView({ behavior: "smooth" });
+
+          // Donner le focus au footer pour la navigation au clavier
+          footer.setAttribute("tabindex", "-1");
+          footer.focus();
+
+          // Gestion du focus pour l'accessibilité
+          footer.addEventListener(
+            "blur",
+            function () {
+              this.removeAttribute("tabindex");
+            },
+            { once: true }
+          );
+        });
+      });
+    </script>
+    <script>
       // Calcul de l'âge de Camille (née en 1976)
       document.addEventListener("DOMContentLoaded", function () {
         const birthYear = 1978; // Année de naissance de Camille
@@ -504,26 +549,35 @@
 
         const openModal = (index) => {
           updateModalContent(index);
-          modal.classList.remove("hidden");
+          document.body.classList.add("modal-open");
+          document.getElementById("image-modal").classList.remove("hidden");
+          disableBodyScroll(); // Désactive le défilement de la page
 
-          // Réinitialiser l'animation du Swipe Hint pour qu'elle se relance
-          swipeIndicator.classList.remove("animate-swipe-hint");
-          void swipeIndicator.offsetWidth; // Force reflow (hack CSS pour restart anim)
-          swipeIndicator.classList.add("animate-swipe-hint");
-
+          // Ajout d'un délai pour permettre l'animation
           setTimeout(() => {
-            backdrop.classList.remove("opacity-0");
-            panel.classList.remove("opacity-0", "scale-95");
-            panel.classList.add("opacity-100", "scale-100");
+            document
+              .getElementById("modal-backdrop")
+              .classList.add("opacity-100");
+            document
+              .getElementById("modal-panel")
+              .classList.add("opacity-100", "scale-100");
           }, 10);
         };
 
         const closeModal = () => {
-          backdrop.classList.add("opacity-0");
-          panel.classList.remove("opacity-100", "scale-100");
-          panel.classList.add("opacity-0", "scale-95");
+          document.body.classList.remove("modal-open");
+          enableBodyScroll(); // Réactive le défilement de la page
+          document
+            .getElementById("modal-backdrop")
+            .classList.remove("opacity-100");
+          document
+            .getElementById("modal-panel")
+            .classList.remove("opacity-100", "scale-100");
+          document
+            .getElementById("modal-panel")
+            .classList.add("opacity-0", "scale-95");
           setTimeout(() => {
-            modal.classList.add("hidden");
+            document.getElementById("image-modal").classList.add("hidden");
             modalImg.src = "";
           }, 300);
         };
